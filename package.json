@@ -1,0 +1,28 @@
+{
+  "name": "spa-node-react-boilerplate-web",
+  "version": "0.1.0",
+  "description": "The Web app for an SPA template using node.js and react",
+  "main": "index.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ariporad/spa-node-react-boilerplate-webclient.git"
+  },
+  "keywords": [
+    "boilerplate",
+    "react",
+    "node",
+    "web",
+    "app",
+    "site",
+    "template"
+  ],
+  "author": "Ari Porad <ariporad+npm@gmail.com> (http://github.com/ariporad)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ariporad/spa-node-react-boilerplate-webclient/issues"
+  },
+  "homepage": "https://github.com/ariporad/spa-node-react-boilerplate-webclient#readme"
+}
