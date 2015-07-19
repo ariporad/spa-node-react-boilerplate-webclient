@@ -30,10 +30,10 @@ module.exports = function Gruntfile(grunt) {
         src: ['**'],
         expand: true,
       },
-      client: {
+      scripts: {
         cwd: config.dir.src,
         dest: config.dir.build,
-        src: config.client.allFiles,
+        src: config.scripts.files,
         expand: true,
       },
       stylesheets: {
@@ -51,18 +51,18 @@ module.exports = function Gruntfile(grunt) {
       },
       stylesheets: {
         cwd: config.dir.build,
-        src: config.style.all.concat(['client/stylus'], config.clean.ignore),
+        src: config.style.all.concat(['styl'], config.clean.ignore),
         expand: true,
       },
-      client: {
+      scripts: {
         cwd: config.dir.build,
-        src: config.client.allFiles
-          .concat(['client/vendor', 'client/js'], config.clean.ignore),
+        src: config.scripts.files
+          .concat(['js'], config.clean.ignore),
         expand: true,
       },
-      clientTests: {
+      scriptsTests: {
         cwd: config.dir.build,
-        src: config.client.tests.concat(config.clean.ignore),
+        src: config.scripts.tests.concat(config.clean.ignore),
         expand: true,
       },
     },
@@ -123,17 +123,17 @@ module.exports = function Gruntfile(grunt) {
     // Build the JavaScript
     //
 
-    // Bundle the client side JS
+    // Bundle the scripts side JS
     browserify: {
       options: {
         transform: ['babelify', 'uglifyify'],
       },
       prod: {
-        src: config.toBuild(config.client.mainFile),
+        src: config.toBuild(config.scripts.mainFile),
         dest: config.bundle + 'js',
       },
       dev: {
-        src: config.toBuild(config.client.mainFile),
+        src: config.toBuild(config.scripts.mainFile),
         dest: config.bundle + 'js',
         options: {
           browserifyOptions: {
@@ -148,8 +148,8 @@ module.exports = function Gruntfile(grunt) {
     //
 
     eslint: {
-      client: {
-        src: config.client.files,
+      scripts: {
+        src: config.scripts.files,
         expand: true,
         cwd: config.dir.src,
       },
@@ -189,7 +189,7 @@ module.exports = function Gruntfile(grunt) {
           livereload: true,
         },
         files: [
-          config.client.dir + '/**/*.{styl,css,js}',
+          config.dir.build + '/**/*.{html,css,js}',
         ],
       },
       stylesheets: {
@@ -199,16 +199,16 @@ module.exports = function Gruntfile(grunt) {
         },
         tasks: ['stylesheets'],
       },
-      client: {
-        files: config.client.noTests.concat(config.client.vendor),
+      scripts: {
+        files: config.scripts.noTests,
         options: {
           cwd: config.dir.src,
         },
-        tasks: ['client:dev'],
+        tasks: ['scripts:dev'],
       },
-      clientTests: {
-        files: config.client.files,
-        tasks: ['clientTests'],
+      tests: {
+        files: config.scripts.files,
+        tasks: ['test'],
         options: {
           cwd: config.dir.src,
         },
@@ -238,30 +238,25 @@ module.exports = function Gruntfile(grunt) {
      'clean:stylesheets',
     ]);
 
-  // Client
-  grunt.registerTask('client:dev',
+  // scripts
+  grunt.registerTask('scripts:dev',
                      'Compiles the JavaScript files. (w/sourcemaps)',
-    ['clean:client',
-     'copy:client',
-     'eslint:client',
+    ['clean:scripts',
+     'copy:scripts',
+     'eslint:scripts',
      'browserify:dev',
-     'clean:client',
+     'clean:scripts',
     ]);
-  grunt.registerTask('client:prod', 'Compiles the JavaScript files.',
-    ['clean:client',
-     'copy:client',
-     'eslint:client',
+  grunt.registerTask('scripts:prod', 'Compiles the JavaScript files.',
+    ['clean:scripts',
+     'copy:scripts',
+     'eslint:scripts',
      'browserify:prod',
-     'clean:client',
-     'clean:clientTests',
+     'clean:scripts',
+     'clean:scriptsTests',
     ]);
-  grunt.registerTask('clientTests', 'Compiles the JavaScript files.',
-    ['eslint:client']);
-
-  grunt.registerTask('test', 'Tests all the code',
-    [
-     'clientTests',
-    ]);
+  grunt.registerTask('test', 'Tests the JavaScript files.',
+    ['eslint:scripts']);
 
   grunt.registerTask('build:prod',
                      'Compiles all of the assets and copies the files to ' +
@@ -269,7 +264,7 @@ module.exports = function Gruntfile(grunt) {
     ['clean:build',
      'copy:build',
      'stylesheets:prod',
-     'client:prod',
+     'scripts:prod',
     ]);
   grunt.registerTask('build:dev',
                      'Compiles all of the assets and copies the files to ' +
@@ -277,7 +272,7 @@ module.exports = function Gruntfile(grunt) {
     ['clean:build',
      'copy:build',
      'stylesheets:dev',
-     'client:dev',
+     'scripts:dev',
     ]);
   grunt.registerTask('build', 'Runs build:prod', 'build:prod');
 

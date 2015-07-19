@@ -10,7 +10,7 @@
 var config = module.exports = {};
 var keys = ['dir',
             'clean',
-            'client',
+            'scripts',
             'style',
             'test',
             'nodeInspector'];
@@ -49,14 +49,11 @@ var makeHelper = config.makeHelper = function makeHelper(helper) {
 //
 // Build Config
 //
-config.dir.dist = 'dist';
 config.dir.build = 'build';
 config.dir.src = 'src';
 
-config.dir.client = config.client.dir = 'client';
-
-// Only bundle the client
-config.bundle = config.client.bundle = config.dir.build + '/' + config.dir.client + '/bundle.';
+// Only bundle the scripts
+config.bundle = config.dir.build + '/bundle.';
 
 //
 // Helpers
@@ -67,14 +64,15 @@ var negate = config.negate = makeHelper(function mapNegate(p) {
 
 var prefixPath = config.prefixPath = function prefixPath(path) {
   return makeHelper(function mapPrefix(p) {
-    return path + '/' + p;
+    return path
+             .replace(config.dir.build, '')
+             .replace(config.dir.src,  '')
+             .replace(config.dir.dist, '') + '/' + p;
   });
 };
 
 var toBuild = config.toBuild = prefixPath(config.dir.build);
 var toSrc = config.toSrc = prefixPath(config.dir.src);
-var toDist = config.toDist = prefixPath(config.dir.dist);
-
 
 //
 // Cleaning
@@ -93,13 +91,11 @@ config.clean.ignore = negate(
 config.test.patterns = ['**/*.test.js', '**/*.test.es', '**/*.test.es6'];
 config.test.ignorePatterns = negate(config.test.patterns);
 
-config.client.mainFile = config.dir.client + '/js/index.es6';
-config.client.files =
-  prefixPath(config.dir.client + '/js')(['**/*.js', '**/*.es', '**/*.es6']);
-config.client.tests = prefixPath(config.client.dir)(config.test.patterns);
-config.client.noTests = config.client.files.concat(config.test.ignorePatterns);
-config.client.vendor = prefixPath(config.dir.client + '/vendor')(['**/*.js', '**/*.es', '**/*.es6']);
-config.client.allFiles = config.client.files.concat(config.client.vendor);
+config.scripts.mainFile = config.dir.build + '/js/index.es6';
+config.scripts.files =
+  prefixPath(config.dir.build + '/js')(['**/*.js', '**/*.es', '**/*.es6']);
+config.scripts.tests = prefixPath(config.build.dir)(config.test.patterns);
+config.scripts.noTests = config.scripts.files.concat(config.test.ignorePatterns);
 
 //
 // Stylesheets
