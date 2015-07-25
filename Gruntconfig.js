@@ -52,6 +52,9 @@ var makeHelper = config.makeHelper = function makeHelper(helper) {
 config.dir.build = 'build';
 config.dir.src = 'src';
 
+config.scripts.dir = config.dir.scripts = 'js';
+config.style.dir = config.dir.style = 'styl';
+
 // Only bundle the scripts
 config.bundle = config.dir.build + '/bundle.';
 
@@ -64,10 +67,10 @@ var negate = config.negate = makeHelper(function mapNegate(p) {
 
 var prefixPath = config.prefixPath = function prefixPath(path) {
   return makeHelper(function mapPrefix(p) {
-    return path
-             .replace(config.dir.build, '')
-             .replace(config.dir.src,  '')
-             .replace(config.dir.dist, '') + '/' + p;
+    return path + '/' + p
+        .replace(config.dir.build + '/', '')
+        .replace(config.dir.src + '/', '')
+        .replace(config.dir.dist + '/', '');
   });
 };
 
@@ -88,14 +91,13 @@ config.clean.ignore = negate(
 //
 // Scripts
 //
-config.test.patterns = ['**/*.test.js', '**/*.test.es', '**/*.test.es6'];
+config.test.patterns = ['**/*.test.js', '**/*.test.es', '**/*.test.js'];
 config.test.ignorePatterns = negate(config.test.patterns);
 
-config.scripts.mainFile = config.dir.build + '/js/index.es6';
-config.scripts.files =
-  prefixPath(config.dir.build + '/js')(['**/*.js', '**/*.es', '**/*.es6']);
-config.scripts.tests = prefixPath(config.build.dir)(config.test.patterns);
-config.scripts.noTests = config.scripts.files.concat(config.test.ignorePatterns);
+config.scripts.mainFile = config.dir.scripts + '/index.js';
+config.scripts.files = prefixPath(config.dir.scripts)('**/*.js');
+config.scripts.tests = config.test.patterns;
+config.scripts.noTests =config.scripts.files.concat(config.test.ignorePatterns);
 
 //
 // Stylesheets

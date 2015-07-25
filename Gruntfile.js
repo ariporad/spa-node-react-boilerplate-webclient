@@ -138,6 +138,7 @@ module.exports = function Gruntfile(grunt) {
         options: {
           browserifyOptions: {
             debug: true,
+            basedir: __dirname + '/' + config.toBuild(config.dir.scripts)[0],
           },
         },
       },
@@ -153,6 +154,9 @@ module.exports = function Gruntfile(grunt) {
         expand: true,
         cwd: config.dir.src,
       },
+      options: {
+        configFile: 'eslint.json'
+      }
     },
 
     // Test the Nodecode™
@@ -282,5 +286,5 @@ module.exports = function Gruntfile(grunt) {
                      'Watches the project for changes, automatically builds' +
                      ' them and runs a server.',
     ['build',
-    ]);
+    'watch']);
 };
