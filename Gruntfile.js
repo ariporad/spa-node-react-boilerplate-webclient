@@ -144,6 +144,42 @@ module.exports = function Gruntfile(grunt) {
       },
     },
 
+    exorcise: {
+      options: {
+        base: __dirname + '/' + config.dir.build
+      },
+      scripts: {
+        options: {},
+        src: config.bundle + 'js',
+        dest: config.bundle + 'js.map',
+      },
+      stylesheets: {
+        options: {},
+        src: config.bundle + 'css',
+        dest: config.bundle + 'css.map',
+      },
+    },
+
+    uglify: {
+      dev: {
+        options: {
+          sourceMap: true,
+          sourceMapIn: config.bundle + 'js.map',
+        },
+        src: config.bundle + 'js',
+        dest: config.bundle + 'js',
+      },
+      prod: {
+        src: config.bundle + 'js',
+        dest: config.bundle + 'js',
+        options: {
+          compress: {
+            drop_console: true
+          }
+        },
+      },
+    },
+
     //
     // Testing
     //
@@ -233,6 +269,7 @@ module.exports = function Gruntfile(grunt) {
     ['copy:stylesheets',
      'stylus:dev',
      'postcss:dev',
+     'exorcise:stylesheets',
      'clean:stylesheets',
     ]);
   grunt.registerTask('stylesheets:prod', 'Compiles the stylesheets.',
@@ -250,6 +287,8 @@ module.exports = function Gruntfile(grunt) {
      'eslint:scripts',
      'browserify:dev',
      'clean:scripts',
+     'exorcise:scripts',
+     'uglify:dev',
     ]);
   grunt.registerTask('scripts:prod', 'Compiles the JavaScript files.',
     ['clean:scripts',
@@ -258,6 +297,7 @@ module.exports = function Gruntfile(grunt) {
      'browserify:prod',
      'clean:scripts',
      'clean:scriptsTests',
+     'uglify:prod'
     ]);
   grunt.registerTask('test', 'Tests the JavaScript files.',
     ['eslint:scripts']);
