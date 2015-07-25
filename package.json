@@ -33,6 +33,7 @@
     "cssnano": "^2.1.0",
     "eslint": "^0.24.1",
     "eslint-plugin-react": "^3.0.0",
+    "extensify": "^1.0.2",
     "grunt": "^0.4.5",
     "grunt-browserify": "^3.8.0",
     "grunt-cli": "^0.1.13",
@@ -54,6 +55,9 @@
     "uglifyify": "^3.0.1"
   },
   "dependencies": {
-    "jquery": "^2.1.4"
+    "jquery": "^2.1.4",
+    "react": "^0.13.3",
+    "react-router": "^0.13.3",
+    "underscore": "^1.8.3"
   }
 }

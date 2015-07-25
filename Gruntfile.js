@@ -126,7 +126,10 @@ module.exports = function Gruntfile(grunt) {
     // Bundle the scripts side JS
     browserify: {
       options: {
-        transform: ['babelify', 'uglifyify'],
+        transform: ['babelify',
+                    'uglifyify',
+                    ['extensify', { extensions: 'jsx' }]
+        ],
       },
       prod: {
         src: config.toBuild(config.scripts.mainFile),
@@ -326,5 +329,5 @@ module.exports = function Gruntfile(grunt) {
                      'Watches the project for changes, automatically builds' +
                      ' them and runs a server.',
     ['build',
-    'watch']);
+     'watch']);
 };
