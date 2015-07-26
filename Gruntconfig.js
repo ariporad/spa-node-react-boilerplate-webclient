@@ -94,8 +94,8 @@ config.clean.ignore = negate(
 config.test.patterns = ['**/*.test.js', '**/*.test.es', '**/*.test.js'];
 config.test.ignorePatterns = negate(config.test.patterns);
 
-config.scripts.mainFile = config.dir.scripts + '/index.js';
-config.scripts.files = prefixPath(config.dir.scripts)('**/*.js');
+config.scripts.mainFile = config.dir.scripts + '/index.jsx';
+config.scripts.files = prefixPath(config.dir.scripts)('**/*.js', '**/*.jsx');
 config.scripts.tests = config.test.patterns;
 config.scripts.noTests =config.scripts.files.concat(config.test.ignorePatterns);
 

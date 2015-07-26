@@ -33,7 +33,7 @@ module.exports = function Gruntfile(grunt) {
       scripts: {
         cwd: config.dir.src,
         dest: config.dir.build,
-        src: config.scripts.files,
+        src: config.scripts.files.concat(['**/*.json']),
         expand: true,
       },
       stylesheets: {
@@ -57,7 +57,7 @@ module.exports = function Gruntfile(grunt) {
       scripts: {
         cwd: config.dir.build,
         src: config.scripts.files
-          .concat(['js'], config.clean.ignore),
+          .concat(['**/*.json', 'js'], config.clean.ignore),
         expand: true,
       },
       scriptsTests: {
@@ -127,8 +127,11 @@ module.exports = function Gruntfile(grunt) {
     browserify: {
       options: {
         transform: ['babelify',
+                    ['extensify', { extensions: ['jsx'] }],
+                    'envify',
+                    'folderify',
+                    'brfs',
                     'uglifyify',
-                    ['extensify', { extensions: 'jsx' }]
         ],
       },
       prod: {
@@ -291,7 +294,7 @@ module.exports = function Gruntfile(grunt) {
      'browserify:dev',
      'clean:scripts',
      'exorcise:scripts',
-     'uglify:dev',
+      //'uglify:dev',
     ]);
   grunt.registerTask('scripts:prod', 'Compiles the JavaScript files.',
     ['clean:scripts',
@@ -328,6 +331,6 @@ module.exports = function Gruntfile(grunt) {
   grunt.registerTask('dev',
                      'Watches the project for changes, automatically builds' +
                      ' them and runs a server.',
-    ['build',
+    ['build:dev',
      'watch']);
 };
