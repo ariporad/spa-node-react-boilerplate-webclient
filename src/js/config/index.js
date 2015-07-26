@@ -10,8 +10,15 @@ const fs = require('fs');
 const path = require('path');
 
 
-const common = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'env/common.json'), 'utf8'));
-let config = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'env', (process.env.NODE_ENV || 'development') + '.json'), 'utf8')) || {};
+const commonString = fs.readFileSync(path.resolve(__dirname, 'env/common.json'),
+                                     'utf8');
+const common = JSON.parse(commonString);
+
+const configString = fs.readFileSync(
+  path.resolve(__dirname, 'env',
+               (process.env.NODE_ENV || 'development') + '.json'),
+  'utf8');
+let config = JSON.parse(configString) || {};
 
 // Since require only requires something once, then references it, we don't
 // want to mess it up.

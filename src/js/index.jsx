@@ -8,8 +8,6 @@ import { Nav, NavItem, Navbar, DropdownButton, MenuItem } from 'react-bootstrap'
 // 'react-router-bootstrap';
 
 import config from './config';
-console.log(Router);
-console.log(config);
 
 const App = React.createClass({
   render: () => {
