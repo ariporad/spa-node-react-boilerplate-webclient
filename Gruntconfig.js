@@ -51,11 +51,11 @@ var makeHelper = config.makeHelper = function makeHelper(helper) {
 //
 config.dir.build = 'build';
 config.dir.src = 'src';
+config.dir.test = { setup: 'test/setup' };
 
 config.scripts.dir = config.dir.scripts = 'js';
 config.style.dir = config.dir.style = 'styl';
 
-// Only bundle the scripts
 config.bundle = config.dir.build + '/bundle.';
 
 //
@@ -91,8 +91,10 @@ config.clean.ignore = negate(
 //
 // Scripts
 //
-config.test.patterns = ['**/*.test.js', '**/*.test.es', '**/*.test.js'];
+// Tests can be JSX
+config.test.patterns = ['**/*.test.js', '**/*.test.jsx'];
 config.test.ignorePatterns = negate(config.test.patterns);
+config.test.setup = { scripts: config.dir.test.setup + '/**/*.js' };
 
 config.scripts.mainFile = config.dir.scripts + '/index.jsx';
 config.scripts.files = prefixPath(config.dir.scripts)('**/*.js', '**/*.jsx');

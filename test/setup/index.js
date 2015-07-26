@@ -3,3 +3,4 @@
  */
 import './sinon';
 import './chai';
+import './react';
