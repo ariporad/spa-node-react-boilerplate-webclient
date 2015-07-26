@@ -3,12 +3,15 @@
  */
 
 import _ from 'underscore';
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
 
-const env = process.env.NODE_ENV || 'development';
-const common = JSON.parse(readFileSync(resolve(__dirname, '/env/common.json')));
-let config = JSON.parse(readFileSync(resolve(__dirname, 'env', env + '.json'))) || {};
+// We have to do this because brfs doesn't work with babel, and we need it to
+// inline things.
+const fs = require('fs');
+const path = require('path');
+
+
+const common = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'env/common.json'), 'utf8'));
+let config = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'env', (process.env.NODE_ENV || 'development') + '.json'), 'utf8')) || {};
 
 // Since require only requires something once, then references it, we don't
 // want to mess it up.
