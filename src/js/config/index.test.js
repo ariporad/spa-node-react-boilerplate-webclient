@@ -15,6 +15,7 @@ describe('index', () => {
     expect(config.name).to.be.a('string');
     expect(config.name).to.have.length.gt(1);
   });
+
   it('Should allow the env specific file to override common', () => {
     expect(config.env).to.not.eql(false);
   });

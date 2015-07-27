@@ -247,27 +247,33 @@ module.exports = function Gruntfile(grunt) {
       }
     },
 
-    // Test the Nodecode™
+    karma: {
+      unit: {
+        configFile: 'karma.conf.js'
+      }
+    },
+
+    //// Test the Nodecode™
     //mochaTest: {
-    //  test: {
-    //    options: {
-    //      reporter: 'spec',
-    //      require: './test.setup.js',
+    //    test: {
+    //      options: {
+    //        reporter: 'spec',
+    //        require: ['./test.setup.js'],
+    //      },
+    //      expand: true,
+    //      src: config.node.js.tests,
+    //      cwd: config.dir.build,
     //    },
-    //    expand: true,
-    //    src: config.node.js.tests,
-    //    cwd: config.dir.build,
-    //  },
-    //  coverage: {
-    //    options: {
-    //      reporter: 'html-cov',
-    //      quiet: true,
-    //      captureFile: 'coverage.html',
+    //    coverage: {
+    //      options: {
+    //        reporter: 'html-cov',
+    //        quiet: true,
+    //        captureFile: 'coverage.html',
+    //      },
+    //      expand: true,
+    //      src: config.node.js.tests,
+    //      cwd: config.dir.build,
     //    },
-    //    expand: true,
-    //    src: config.node.js.tests,
-    //    cwd: config.dir.build,
-    //  },
     //},
 
     //
@@ -356,7 +362,6 @@ module.exports = function Gruntfile(grunt) {
      'copy:scripts',
      'browserify:test',
      'clean:scripts',
-     'exorcise:test',
      'copy:test',]);
 
   grunt.registerTask('build:prod',

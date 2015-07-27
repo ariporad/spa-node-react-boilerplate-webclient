@@ -3,6 +3,7 @@
  */
 import 'source-map-support/register';
 
+import './phantom';
 import './sinon';
 import './chai';
 import './react';
