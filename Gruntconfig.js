@@ -94,7 +94,7 @@ config.clean.ignore = negate(
 // Tests can be JSX
 config.test.patterns = ['**/*.test.js', '**/*.test.jsx'];
 config.test.ignorePatterns = negate(config.test.patterns);
-config.test.setup = { scripts: config.dir.test.setup + '/**/*.js' };
+config.test.setup = { scripts: config.dir.test.setup + '/index.js' };
 
 config.scripts.mainFile = config.dir.scripts + '/index.jsx';
 config.scripts.files = prefixPath(config.dir.scripts)('**/*.js', '**/*.jsx');

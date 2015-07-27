@@ -1,3 +1,4 @@
 {
-  "name": "Ari is the King"
+  "name": "React Node SPA Boilerplate",
+  "env": false
 }

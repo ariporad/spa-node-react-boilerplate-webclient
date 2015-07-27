@@ -19,6 +19,18 @@ module.exports = function Gruntfile(grunt) {
     // Build Setup
     //
 
+    env: {
+      dev: {
+        NODE_ENV: 'development',
+      },
+      prod: {
+        NODE_ENV: 'production',
+      },
+      test: {
+        NODE_ENV: 'test',
+      },
+    },
+
     // Copy files from src to build
     // It's a very conscious design decision to copy everything here,
     // and do all of everything in build/. It clearly separates the build
@@ -42,6 +54,22 @@ module.exports = function Gruntfile(grunt) {
         src: config.style.stylus,
         expand: true,
       },
+      test: {
+        files: [
+          {
+            expand: true,
+            cwd: 'node_modules/mocha',
+            src: 'mocha.{js,css}',
+            dest: config.dir.build,
+          },
+          {
+            expand: true,
+            cwd: 'test',
+            src: 'mocha.html',
+            dest: config.dir.build,
+          },
+        ],
+      },
     },
 
     // Clean the build dir
@@ -51,16 +79,17 @@ module.exports = function Gruntfile(grunt) {
       },
       stylesheets: {
         cwd: config.dir.build,
-        src: config.style.all.concat(['styl'], config.clean.ignore),
+        src: config.style.all.concat(['styl',
+                                      '**/*.css.map'], config.clean.ignore),
         expand: true,
       },
       scripts: {
         cwd: config.dir.build,
         src: config.scripts.files
-          .concat(['**/*.json', 'js'], config.clean.ignore),
+          .concat(['**/*.json', 'js', '**/*.js.map'], config.clean.ignore),
         expand: true,
       },
-      scriptsTests: {
+      test: {
         cwd: config.dir.build,
         src: config.scripts.tests.concat(config.clean.ignore),
         expand: true,
@@ -127,7 +156,7 @@ module.exports = function Gruntfile(grunt) {
     browserify: {
       options: {
         transform: ['babelify',
-                    ['extensify', { extensions: ['jsx'] }],
+          ['extensify', { extensions: ['jsx'] }],
                     'envify',
                     'brfs',
                     'folderify',
@@ -148,6 +177,18 @@ module.exports = function Gruntfile(grunt) {
           },
         },
       },
+      test: {
+        src: config
+          .toBuild(config.scripts.tests)
+          .concat([config.test.setup.scripts]),
+        dest: config.bundle + 'test.js',
+        options: {
+          browserifyOptions: {
+            debug: true,
+            basedir: __dirname + '/' + config.toBuild(config.dir.scripts)[0],
+          },
+        },
+      },
     },
 
     exorcise: {
@@ -158,6 +199,11 @@ module.exports = function Gruntfile(grunt) {
         options: {},
         src: config.bundle + 'js',
         dest: config.bundle + 'js.map',
+      },
+      test: {
+        options: {},
+        src: config.bundle + 'test.js',
+        dest: config.bundle + 'test.js.map',
       },
       stylesheets: {
         options: {},
@@ -252,7 +298,7 @@ module.exports = function Gruntfile(grunt) {
         },
         tasks: ['scripts:dev'],
       },
-      tests: {
+      test: {
         files: config.scripts.files,
         tasks: ['test'],
         options: {
@@ -294,7 +340,6 @@ module.exports = function Gruntfile(grunt) {
      'browserify:dev',
      'clean:scripts',
      'exorcise:scripts',
-      //'uglify:dev',
     ]);
   grunt.registerTask('scripts:prod', 'Compiles the JavaScript files.',
     ['clean:scripts',
@@ -302,16 +347,23 @@ module.exports = function Gruntfile(grunt) {
      'eslint:scripts',
      'browserify:prod',
      'clean:scripts',
-     'clean:scriptsTests',
      'uglify:prod'
     ]);
   grunt.registerTask('test', 'Tests the JavaScript files.',
-    ['eslint:scripts']);
+    ['env:test',
+     'clean:build',
+     'eslint:scripts',
+     'copy:scripts',
+     'browserify:test',
+     'clean:scripts',
+     'exorcise:test',
+     'copy:test',]);
 
   grunt.registerTask('build:prod',
                      'Compiles all of the assets and copies the files to ' +
                      'the build directory.',
-    ['clean:build',
+    ['env:prod',
+     'clean:build',
      'copy:build',
      'stylesheets:prod',
      'scripts:prod',
@@ -319,7 +371,8 @@ module.exports = function Gruntfile(grunt) {
   grunt.registerTask('build:dev',
                      'Compiles all of the assets and copies the files to ' +
                      'the build directory. (w/sourcemaps)',
-    ['clean:build',
+    ['env:dev',
+     'clean:build',
      'copy:build',
      'stylesheets:dev',
      'scripts:dev',
