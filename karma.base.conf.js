@@ -7,7 +7,7 @@
 var config = require('./Gruntconfig');
 
 module.exports = function(karmaConf) {
-  karmaConf.set({
+  return {
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: config.dir.build,
@@ -67,5 +67,5 @@ module.exports = function(karmaConf) {
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false
-  })
+  };
 };
