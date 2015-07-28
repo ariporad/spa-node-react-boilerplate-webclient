@@ -65,7 +65,7 @@ module.exports = function Gruntfile(grunt) {
           {
             expand: true,
             cwd: 'test',
-            src: 'mocha.html',
+            src: '*.*',
             dest: config.dir.build,
           },
         ],
