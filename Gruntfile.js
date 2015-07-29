@@ -154,18 +154,11 @@ module.exports = function Gruntfile(grunt) {
 
     // Bundle the scripts side JS
     browserify: {
-      options: {
-        transform: ['babelify',
-          ['extensify', { extensions: ['jsx'] }],
-                    'envify',
-                    'brfs',
-                    'folderify',
-                    'uglifyify',
-        ],
-      },
+      options: {},
       prod: {
         src: config.toBuild(config.scripts.mainFile),
         dest: config.bundle + 'js',
+        transform: ['uglifyify'],
       },
       dev: {
         src: config.toBuild(config.scripts.mainFile),
