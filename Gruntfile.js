@@ -170,18 +170,18 @@ module.exports = function Gruntfile(grunt) {
           },
         },
       },
-      test: {
-        src: config
-          .toBuild(config.scripts.tests)
-          .concat([config.test.setup.scripts]),
-        dest: config.bundle + 'test.js',
-        options: {
-          browserifyOptions: {
-            debug: true,
-            basedir: __dirname + '/' + config.toBuild(config.dir.scripts)[0],
-          },
-        },
-      },
+      // test: {
+      //  src: config
+      //    .toBuild(config.scripts.tests)
+      //    .concat([config.test.setup.scripts]),
+      //  dest: config.bundle + 'test.js',
+      //  options: {
+      //    browserifyOptions: {
+      //      debug: true,
+      //      basedir: __dirname + '/' + config.toBuild(config.dir.scripts)[0],
+      //    },
+      //  },
+      // },
     },
 
     exorcise: {

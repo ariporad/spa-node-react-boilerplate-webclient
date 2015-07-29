@@ -9,5 +9,6 @@ var config = require('./Gruntconfig');
 
 module.exports = function(karma) {
   var conf = require('./karma.base.conf')(karma);
+  conf.singleRun = true;
   karma.set(conf);
 };
