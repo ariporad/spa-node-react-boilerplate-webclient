@@ -20,6 +20,7 @@ module.exports = function(karma) {
     type: 'html',
     dir: path.resolve(__dirname, config.test.coverage.dir),
   };
-  console.log(conf);
+  conf.singleRun = true;
+
   karma.set(conf);
 };

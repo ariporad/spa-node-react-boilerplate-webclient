@@ -242,8 +242,25 @@ module.exports = function Gruntfile(grunt) {
 
     karma: {
       unit: {
-        configFile: 'karma.conf.js'
-      }
+        configFile: 'karma.conf.js',
+        browsers: ['PhantomJS'],
+        background: true,
+      },
+      once: {
+        configFile: 'karma.conf.js',
+        browsers: ['PhantomJS'],
+        singleRun: true,
+      },
+      coverage: {
+        configFile: 'karma.coverage.conf.js',
+        browsers: ['PhantomJS'],
+        singleRun: true,
+      },
+      browsers: {
+        configFile: 'karma.conf.js',
+        background: true,
+        autoWatch: true,
+      },
     },
 
     //// Test the Nodecode™
@@ -299,7 +316,7 @@ module.exports = function Gruntfile(grunt) {
       },
       test: {
         files: config.scripts.files,
-        tasks: ['test'],
+        tasks: ['karma:unit:run'],
         options: {
           cwd: config.dir.src,
         },
@@ -348,14 +365,10 @@ module.exports = function Gruntfile(grunt) {
      'clean:scripts',
      'uglify:prod'
     ]);
-  grunt.registerTask('test', 'Tests the JavaScript files.',
-    ['env:test',
-     'clean:build',
-     'eslint:scripts',
-     'copy:scripts',
-     'browserify:test',
-     'clean:scripts',
-     'copy:test',]);
+  grunt.registerTask('test', 'Tests the JavaScript files.', ['karma:once']);
+  grunt.registerTask('test:coverage',
+                     'Tests the JavaScript files and generates coverage reports',
+                    ['karma:coverage']);
 
   grunt.registerTask('build:prod',
                      'Compiles all of the assets and copies the files to ' +
@@ -383,5 +396,14 @@ module.exports = function Gruntfile(grunt) {
                      'Watches the project for changes, automatically builds' +
                      ' them and runs a server.',
     ['build:dev',
+     'karma:unit:start',
      'watch']);
+  grunt.registerTask('dev:browsers',
+                     'Watches the project for changes, automatically builds' +
+                     ' them and runs a server.',
+    ['build:dev',
+     'karma:browsers',
+     'watch:livereload',
+     'watch:scripts',
+     'watch:stylesheets']);
 };
