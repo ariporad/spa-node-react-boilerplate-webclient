@@ -18,7 +18,7 @@ module.exports = function(karma) {
   return {
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: config.dir.src,
+    basePath: config.toSrc(config.dir.scripts)[0],
 
 
     // frameworks to use
@@ -28,10 +28,8 @@ module.exports = function(karma) {
 
     // list of files / patterns to load in the browser
     files: [
-      '../test/setup/index.js',
-      '**/*.test.js',
-      '**/*.test.jsx',
-    ],
+      config.prefixPath('../..')(config.test.setup.scripts)[0],
+    ].concat(config.scripts.files),
 
 
     // list of files to exclude

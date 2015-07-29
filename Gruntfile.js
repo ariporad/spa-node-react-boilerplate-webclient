@@ -90,8 +90,8 @@ module.exports = function Gruntfile(grunt) {
         expand: true,
       },
       test: {
-        cwd: config.dir.build,
-        src: config.scripts.tests.concat(config.clean.ignore),
+        cwd: __dirname,
+        src: config.test.coverage.dir,
         expand: true,
       },
     },

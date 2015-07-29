@@ -7,17 +7,18 @@
 
 var config = require('./Gruntconfig');
 var istanbul = require('browserify-istanbul');
+var path = require('path');
 
 module.exports = function(karma) {
   var conf = require('./karma.base.conf')(karma);
   conf.reporters.push('coverage');
   conf.browserify.transform.push(istanbul({
-    ignore: ['**/node_modules/**', '**/*.test.js'],
+    ignore: ['**/node_modules/**'].concat(config.test.patterns),
   }));
 
   conf.coverageReporter = {
     type: 'html',
-    dir: __dirname + '/coverage/'
+    dir: path.resolve(__dirname, config.test.coverage.dir),
   };
   console.log(conf);
   karma.set(conf);
