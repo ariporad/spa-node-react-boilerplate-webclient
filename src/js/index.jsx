@@ -1,3 +1,4 @@
+import 'babelify/polyfill';
 /**
  * Created by Ari on 7/19/15.
  */
