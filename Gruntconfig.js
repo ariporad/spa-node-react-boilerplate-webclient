@@ -108,3 +108,5 @@ config.scripts.noTests =config.scripts.files.concat(config.test.ignorePatterns);
 config.style.stylus = ['**/*.styl'];
 config.style.css = ['**/*.css'];
 config.style.all = config.style.stylus.concat(config.style.css);
+
+module.exports = require('./config');

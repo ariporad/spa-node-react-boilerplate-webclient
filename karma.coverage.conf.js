@@ -5,7 +5,7 @@
 // Make ESLint treat this as ES5
 /*eslint no-var:0, prefer-const:0*/
 
-var config = require('./Gruntconfig');
+var config = require('./config');
 var istanbul = require('browserify-istanbul');
 var path = require('path');
 

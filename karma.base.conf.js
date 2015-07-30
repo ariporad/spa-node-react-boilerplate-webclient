@@ -5,10 +5,9 @@
 /*eslint no-var:0, prefer-const:0*/
 
 var config = require('./Gruntconfig');
-var pkg = require('./package.json');
 
 module.exports = function(karma) {
-  var transforms = pkg.browserify.transform;
+  var transforms = config.browserify.transform;
   var envifyIndex = transforms.indexOf('envify');
 
   if (envifyIndex !== -1) {

@@ -1,7 +1,7 @@
 // Make ESLint treat this as ES5
 /*eslint no-var:0, prefer-const:0*/
 
-var config = require('./Gruntconfig');
+var config = require('./config');
 var path = require('path');
 
 
@@ -158,16 +158,14 @@ module.exports = function Gruntfile(grunt) {
       prod: {
         src: config.toBuild(config.scripts.mainFile),
         dest: config.bundle + 'js',
-        transform: ['uglifyify'],
+        transform: config.browserify.transform.concat(['uglifyify'])
       },
       dev: {
         src: config.toBuild(config.scripts.mainFile),
         dest: config.bundle + 'js',
         options: {
-          browserifyOptions: {
-            debug: true,
-            basedir: __dirname + '/' + config.toBuild(config.dir.scripts)[0],
-          },
+          transform: config.browserify.transform,
+          browserifyOptions: config.browserify.options,
         },
       },
       // test: {
