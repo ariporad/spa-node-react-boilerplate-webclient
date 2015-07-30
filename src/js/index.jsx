@@ -6,16 +6,16 @@ import { default as Router, Route } from 'react-router';
 // import { Nav, NavItem, Navbar, DropdownButton, MenuItem } from
 // 'react-bootstrap';
 // import { NavItemLink, ButtonLink, ListGroupItemLink }
-// from 'react-router-bootstrap';
+// from    'react-router-bootstrap';
 
 import config from './config';
 
-import Navbar from './components/Navbar';
+import Template from './components/Template';
 
 const App = React.createClass({
   render: () => {
     return (
-      <Navbar name={config.name} />
+      <h1>Hiya!!</h1>
     );
   },
 });
@@ -25,5 +25,5 @@ const routes = (
 );
 
 Router.run(routes, (Handler) => {
-  React.render(<Handler />, document.body);
+  React.render(<Template name={config.name} ><Handler /></Template>, document.body);
 });
