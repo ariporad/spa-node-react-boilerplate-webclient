@@ -266,3 +266,6 @@ node_modules
 ### Build Output ###
 coverage
 build
+todo.*
+TODO.*
+ToDo.*
