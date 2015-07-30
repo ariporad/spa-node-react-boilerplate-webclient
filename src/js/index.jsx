@@ -2,7 +2,7 @@
  * Created by Ari on 7/19/15.
  */
 import React from 'react';
-import { default as Router, Route, RouteHandler } from 'react-router';
+import { default as Router, Route, RouteHandler, DefaultRoute } from 'react-router';
 // import { Nav, NavItem, Navbar, DropdownButton, MenuItem } from
 // 'react-bootstrap';
 // import { NavItemLink, ButtonLink, ListGroupItemLink }
@@ -11,7 +11,9 @@ import { default as Router, Route, RouteHandler } from 'react-router';
 import config from './config';
 
 import Navbar from './components/Navbar.jsx';
+
 import About from './components/About.jsx';
+import Home from './components/Home.jsx';
 
 const App = React.createClass({
   render: () => {
@@ -29,6 +31,7 @@ const App = React.createClass({
 const routes = (
   <Route handler={App} path="/">
     <Route handler={About} path="/about" />
+    <DefaultRoute handler={Home} />
   </Route>
 );
 
