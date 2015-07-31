@@ -4,7 +4,7 @@
 // Make ESLint treat this as ES5
 /*eslint no-var:0, prefer-const:0*/
 
-var config = require('./Gruntconfig');
+var config = require('./config');
 
 module.exports = function(karma) {
   var transforms = config.browserify.transform;
@@ -27,7 +27,7 @@ module.exports = function(karma) {
 
     // list of files / patterns to load in the browser
     files: [
-      config.prefixPath('..')(config.test.setup.scripts)[0],
+      config.prefix('..')(config.test.setup.script.replace(__dirname, ''))[0],
     ].concat(config.scripts.files),
 
 

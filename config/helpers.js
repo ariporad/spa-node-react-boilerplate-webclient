@@ -4,7 +4,6 @@
  */
 
 module.exports = function helpers(config){
-  console.log(this);
   this.helper = config.helper = function makeHelper(helper) {
     return function helperWrapper(paths) {
       var Paths = [];
