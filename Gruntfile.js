@@ -269,7 +269,6 @@ module.exports = function Gruntfile(grunt) {
       browsers: {
         configFile: 'karma.conf.js',
         background: true,
-        autoWatch: true,
       },
     },
 
@@ -333,7 +332,7 @@ module.exports = function Gruntfile(grunt) {
           spawn: false,
           cwd: config.dir.src,
         },
-        tasks: ['stylesheets'],
+        tasks: ['stylesheets:dev'],
       },
       scripts: {
         files: config.scripts.noTests,
@@ -425,7 +424,8 @@ console.log(grunt.config('browserify.watch'));
   grunt.registerTask('dev',
                      'Watches the project for changes, automatically builds' +
                      ' them and runs a server.',
-    ['karma:unit:start',
+    ['build:dev',
+     'karma:unit:start',
      'connect:dev',
      'browserify:watch',
      'watch']);
@@ -433,8 +433,8 @@ console.log(grunt.config('browserify.watch'));
                      'Watches the project for changes, automatically builds' +
                      ' them and runs a server.',
     ['build:dev',
-     'karma:browsers',
-     'watch:livereload',
-     //'watch:scripts',
-     'watch:stylesheets']);
+     'karma:browsers:start',
+     'connect:dev',
+     'browserify:watch',
+     'watch']);
 };
