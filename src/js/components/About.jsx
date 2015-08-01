@@ -9,7 +9,7 @@ const propTypes = {
 class About extends React.Component {
   render() {
     return (
-      <p>Ari is the King. All hail Ari!</p>
+      <p>Ari is the Amazing King. All Hail King Ari!</p>
     );
   }
 }

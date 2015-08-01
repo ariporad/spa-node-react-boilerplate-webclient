@@ -5,7 +5,7 @@
 // Make ESLint treat this as ES5
 /*eslint no-var:0, prefer-const:0*/
 
-var config = require('./Gruntconfig');
+var config = require('./config');
 
 module.exports = function(karma) {
   var conf = require('./karma.base.conf')(karma);

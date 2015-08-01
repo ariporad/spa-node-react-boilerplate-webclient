@@ -158,7 +158,9 @@ module.exports = function Gruntfile(grunt) {
       prod: {
         src: config.toBuild(config.scripts.mainFile),
         dest: config.bundle + 'js',
-        transform: config.browserify.transform.concat(['uglifyify'])
+        options: {
+          transform: config.browserify.transform.concat(['uglifyify'])
+        },
       },
       dev: {
         src: config.toBuild(config.scripts.mainFile),
@@ -166,6 +168,18 @@ module.exports = function Gruntfile(grunt) {
         options: {
           transform: config.browserify.transform,
           browserifyOptions: config.browserify.options,
+        },
+      },
+      watch: {
+        src: config.toSrc(config.scripts.mainFile),
+        dest: config.bundle + 'js',
+        options: {
+          transform: config.browserify.transform,
+          browserifyOptions: config.browserify.options,
+          watch: true,
+          watchifyOptions: {
+            verbose: true
+          },
         },
       },
       // test: {
@@ -176,10 +190,8 @@ module.exports = function Gruntfile(grunt) {
       //  options: {
       //    browserifyOptions: {
       //      debug: true,
-      //      basedir: __dirname + '/' + config.toBuild(config.dir.scripts)[0],
-      //    },
-      //  },
-      // },
+      //      basedir: __dirname + '/' +
+      // config.toBuild(config.dir.scripts)[0], }, }, },
     },
 
     exorcise: {
@@ -288,6 +300,23 @@ module.exports = function Gruntfile(grunt) {
     // Dev
     //
 
+    concurrent: {
+      start: {
+        tasks: ['']
+      },
+    },
+
+    connect: {
+      dev: {
+        options: {
+          port: 8080,
+          base: config.dir.build,
+          livereload: true,
+          useAvailablePort: true,
+        }
+      }
+    },
+
     // Watch for changes
     watch: {
       livereload: {
@@ -295,12 +324,13 @@ module.exports = function Gruntfile(grunt) {
           livereload: true,
         },
         files: [
-          config.dir.build + '/**/*.{html,css,js}',
+          config.dir.build + '/*.*',
         ],
       },
       stylesheets: {
         files: config.style.all,
         options: {
+          spawn: false,
           cwd: config.dir.src,
         },
         tasks: ['stylesheets'],
@@ -308,28 +338,30 @@ module.exports = function Gruntfile(grunt) {
       scripts: {
         files: config.scripts.noTests,
         options: {
+          spawn: false,
           cwd: config.dir.src,
         },
-        tasks: ['scripts:dev'],
+        tasks: [],
       },
       test: {
         files: config.scripts.files,
-        tasks: ['karma:unit:run'],
+        tasks: ['eslint', 'karma:unit:run'],
         options: {
+          spawn: false,
           cwd: config.dir.src,
         },
       },
     },
   });
 
-  // load the plugins
+// load the plugins
   require('load-grunt-tasks')(grunt);
 
-  //
-  // Tasks
-  //
-
-  // Stylesheets
+//
+// Tasks
+//
+console.log(grunt.config('browserify.watch'));
+// Stylesheets
   grunt.registerTask('stylesheets:dev',
                      'Compiles the stylesheets. (w/sourcemaps)',
     ['copy:stylesheets',
@@ -345,7 +377,7 @@ module.exports = function Gruntfile(grunt) {
      'clean:stylesheets',
     ]);
 
-  // scripts
+// scripts
   grunt.registerTask('scripts:dev',
                      'Compiles the JavaScript files. (w/sourcemaps)',
     ['clean:scripts',
@@ -366,7 +398,7 @@ module.exports = function Gruntfile(grunt) {
   grunt.registerTask('test', 'Tests the JavaScript files.', ['karma:once']);
   grunt.registerTask('test:coverage',
                      'Tests the JavaScript files and generates coverage reports',
-                    ['karma:coverage']);
+    ['karma:coverage']);
 
   grunt.registerTask('build:prod',
                      'Compiles all of the assets and copies the files to ' +
@@ -393,8 +425,9 @@ module.exports = function Gruntfile(grunt) {
   grunt.registerTask('dev',
                      'Watches the project for changes, automatically builds' +
                      ' them and runs a server.',
-    ['build:dev',
-     'karma:unit:start',
+    ['karma:unit:start',
+     'connect:dev',
+     'browserify:watch',
      'watch']);
   grunt.registerTask('dev:browsers',
                      'Watches the project for changes, automatically builds' +
@@ -402,6 +435,6 @@ module.exports = function Gruntfile(grunt) {
     ['build:dev',
      'karma:browsers',
      'watch:livereload',
-     'watch:scripts',
+     //'watch:scripts',
      'watch:stylesheets']);
 };
