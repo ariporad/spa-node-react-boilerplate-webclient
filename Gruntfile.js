@@ -39,19 +39,8 @@ module.exports = function Gruntfile(grunt) {
       build: {
         cwd: config.dir.src,
         dest: config.dir.build,
-        src: ['**'],
-        expand: true,
-      },
-      scripts: {
-        cwd: config.dir.src,
-        dest: config.dir.build,
-        src: config.scripts.files.concat(['**/*.json']),
-        expand: true,
-      },
-      stylesheets: {
-        cwd: config.dir.src,
-        dest: config.dir.build,
-        src: config.style.stylus,
+        src: ['**'].concat(config.negate(config.dir.scripts + '/**',
+                                         config.dir.style + '/**')),
         expand: true,
       },
       test: {
@@ -104,7 +93,7 @@ module.exports = function Gruntfile(grunt) {
     // Compile the Styl(us)
     stylus: {
       prod: {
-        src: config.toBuild(config.style.all),
+        src: config.to.src(config.style.all),
         dest: config.bundle + 'css',
       },
       dev: {
@@ -114,7 +103,7 @@ module.exports = function Gruntfile(grunt) {
             inline: true,
           },
         },
-        src: config.toBuild(config.style.all),
+        src: config.to.src(config.style.all),
         dest: config.bundle + 'css',
       },
     },
@@ -133,15 +122,11 @@ module.exports = function Gruntfile(grunt) {
       },
       prod: {
         expand: true,
-        src: '**/*.css',
-        cwd: config.dir.build,
-        dest: config.dir.build,
+        src: config.bundle + 'css',
       },
       dev: {
         expand: true,
-        src: '**/*.css',
-        cwd: config.dir.build,
-        dest: config.dir.build,
+        src: config.bundle + 'css',
         options: {
           map: true,
         },
@@ -156,14 +141,14 @@ module.exports = function Gruntfile(grunt) {
     browserify: {
       options: {},
       prod: {
-        src: config.toBuild(config.scripts.mainFile),
+        src: config.to.src(config.scripts.mainFile),
         dest: config.bundle + 'js',
         options: {
           transform: config.browserify.transform.concat(['uglifyify'])
         },
       },
       dev: {
-        src: config.toBuild(config.scripts.mainFile),
+        src: config.to.src(config.scripts.mainFile),
         dest: config.bundle + 'js',
         options: {
           transform: config.browserify.transform,
@@ -171,7 +156,7 @@ module.exports = function Gruntfile(grunt) {
         },
       },
       watch: {
-        src: config.toSrc(config.scripts.mainFile),
+        src: config.to.src(config.scripts.mainFile),
         dest: config.bundle + 'js',
         options: {
           transform: config.browserify.transform,
@@ -202,11 +187,6 @@ module.exports = function Gruntfile(grunt) {
         options: {},
         src: config.bundle + 'js',
         dest: config.bundle + 'js.map',
-      },
-      test: {
-        options: {},
-        src: config.bundle + 'test.js',
-        dest: config.bundle + 'test.js.map',
       },
       stylesheets: {
         options: {},
@@ -350,7 +330,26 @@ module.exports = function Gruntfile(grunt) {
           cwd: config.dir.src,
         },
       },
+      browsers: {
+        files: config.scripts.files,
+        tasks: ['eslint', 'karma:browsers:run'],
+        options: {
+          spawn: false,
+          cwd: config.dir.src,
+        },
+      },
     },
+
+    // Run only a subset of watch tasks
+    focus: {
+      test: {
+        exclude: ['browsers'],
+      },
+      browsers: {
+        exclude: ['test'],
+      },
+    },
+
   });
 
 // load the plugins
@@ -359,40 +358,34 @@ module.exports = function Gruntfile(grunt) {
 //
 // Tasks
 //
-console.log(grunt.config('browserify.watch'));
+
 // Stylesheets
   grunt.registerTask('stylesheets:dev',
                      'Compiles the stylesheets. (w/sourcemaps)',
-    ['copy:stylesheets',
-     'stylus:dev',
-     'postcss:dev',
-     'exorcise:stylesheets',
-     'clean:stylesheets',
+    [
+      'stylus:dev',
+      'postcss:dev',
+      'exorcise:stylesheets',
     ]);
   grunt.registerTask('stylesheets:prod', 'Compiles the stylesheets.',
-    ['copy:stylesheets',
-     'stylus:prod',
-     'postcss:prod',
-     'clean:stylesheets',
+    [
+      'stylus:prod',
+      'postcss:prod',
     ]);
 
 // scripts
   grunt.registerTask('scripts:dev',
                      'Compiles the JavaScript files. (w/sourcemaps)',
-    ['clean:scripts',
-     'copy:scripts',
-     'eslint:scripts',
-     'browserify:dev',
-     'clean:scripts',
-     'exorcise:scripts',
+    [
+      'eslint:scripts',
+      'browserify:dev',
+      'exorcise:scripts',
     ]);
   grunt.registerTask('scripts:prod', 'Compiles the JavaScript files.',
-    ['clean:scripts',
-     'copy:scripts',
-     'eslint:scripts',
-     'browserify:prod',
-     'clean:scripts',
-     'uglify:prod'
+    [
+      'eslint:scripts',
+      'browserify:prod',
+      'uglify:prod'
     ]);
   grunt.registerTask('test', 'Tests the JavaScript files.', ['karma:once']);
   grunt.registerTask('test:coverage',
@@ -424,17 +417,20 @@ console.log(grunt.config('browserify.watch'));
   grunt.registerTask('dev',
                      'Watches the project for changes, automatically builds' +
                      ' them and runs a server.',
-    ['build:dev',
-     'karma:unit:start',
-     'connect:dev',
-     'browserify:watch',
-     'watch']);
+    [
+      'build:dev',
+      'karma:unit:start',
+      'connect:dev',
+      'browserify:watch',
+      'focus:test',
+    ]);
   grunt.registerTask('dev:browsers',
                      'Watches the project for changes, automatically builds' +
                      ' them and runs a server.',
-    ['build:dev',
-     'karma:browsers:start',
-     'connect:dev',
-     'browserify:watch',
-     'watch']);
+    [
+      'build:dev',
+      'karma:browsers:start',
+      'connect:dev',
+      'focus:browsers',
+    ]);
 };
