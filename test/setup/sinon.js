@@ -4,6 +4,8 @@
 
 import { sandbox } from 'sinon';
 
+// Before every test, make global.sinon a sandbox, then clean up afterwards.
+
 beforeEach(() => {
   global.sinon = sandbox.create();
 });
