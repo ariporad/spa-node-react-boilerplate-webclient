@@ -21,7 +21,4 @@ module.exports = function build(config) {
     src: this.prefix(dir.src),
     base: this.prefix(''),
   };
-
-  config.toBuild = config.to.build;
-  config.toSrc = config.to.src;
 };
