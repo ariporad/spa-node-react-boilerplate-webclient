@@ -1,4 +1,4 @@
-// From http://github.com/airbnb/javascript
+// From http://github.com/airbnb/javascript, but with JSDoc Added
 {
   "parser": "babel-eslint",          // https://github.com/babel/babel-eslint
   "plugins": [
@@ -169,6 +169,11 @@
     "space-infix-ops": 2,            // http://eslint.org/docs/rules/space-infix-ops
     "space-return-throw-case": 2,    // http://eslint.org/docs/rules/space-return-throw-case
     "spaced-line-comment": 2,        // http://eslint.org/docs/rules/spaced-line-comment
+
+    /**
+     * JSDoc
+     */
+    "valid-jsdoc": 2,                // http://eslint.org/docs/rules/valid-jsdoc
 
     /**
      * JSX style

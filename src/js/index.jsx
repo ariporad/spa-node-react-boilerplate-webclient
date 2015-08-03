@@ -3,7 +3,7 @@ import 'babelify/polyfill';
  * Created by Ari on 7/19/15.
  */
 import React from 'react';
-import { default as Router, Route, RouteHandler, DefaultRoute } from 'react-router';
+import { default as Router, Route, DefaultRoute } from 'react-router';
 // import { Nav, NavItem, Navbar, DropdownButton, MenuItem } from
 // 'react-bootstrap';
 // import { NavItemLink, ButtonLink, ListGroupItemLink }
@@ -15,6 +15,9 @@ import Template from './components/Template.jsx';
 
 import About from './components/About.jsx';
 import Home from './components/Home.jsx';
+
+console.log('Running with config:');
+console.log(config);
 
 const routes = (
   <Route handler={Template} path="/">
