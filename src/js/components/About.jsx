@@ -3,9 +3,17 @@
  */
 import React from 'react';
 
+/**
+ * PropTypes for About
+ * @type {{}}
+ */
 const propTypes = {
 };
 
+/**
+ * @classdesc An about page, has some filler content right now.
+ * @class
+ */
 class About extends React.Component {
   render() {
     return (
@@ -16,4 +24,7 @@ class About extends React.Component {
 
 About.propTypes = propTypes;
 
+/**
+ * @export {About}
+ */
 export default About;

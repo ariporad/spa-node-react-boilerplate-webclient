@@ -5,9 +5,17 @@ import React from 'react';
 
 import config from '../config';
 
+/**
+ * PropTypes for Home
+ * @type {{}}
+ */
 const propTypes = {
 };
 
+/**
+ * @classdesc A basic home page that displays a welcome message
+ * @class
+ */
 class Home extends React.Component {
   render() {
     return (
@@ -18,4 +26,7 @@ class Home extends React.Component {
 
 Home.propTypes = propTypes;
 
+/**
+ * @exports {Home}
+ */
 export default Home;

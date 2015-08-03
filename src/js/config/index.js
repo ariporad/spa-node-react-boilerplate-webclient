@@ -24,4 +24,7 @@ let config = JSON.parse(configString) || {};
 // want to mess it up.
 config = _.extend(_.clone(common), config);
 
+/**
+ * @exports {Object} ./env/common & ./env/{NODE_ENV} merged.
+ */
 export { config as default, config };
