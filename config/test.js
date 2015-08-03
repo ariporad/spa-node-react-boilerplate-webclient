@@ -2,6 +2,13 @@
 /**
  * Created by Ari on 7/30/15.
  */
+
+/**
+ * Adds a script property to config with various configuration pertaining to
+ * running the tests.
+ *
+ * @param {Object} config the config object to add test config onto.
+ */
 module.exports = function(config){
   var patterns = ['**/*.test.js', '**/*.test.jsx'];
   var setupDir = 'test/setup';

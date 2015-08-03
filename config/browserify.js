@@ -3,6 +3,11 @@
  * Created by Ari on 7/30/15.
  */
 
+
+/**
+ * Add browserify configuration and transforms to config
+ * @param {Object} config, the existing configuration, which will be get added to.
+ */
 module.exports = function(config) {
   var browserify = config.browserify = {
     transform: [

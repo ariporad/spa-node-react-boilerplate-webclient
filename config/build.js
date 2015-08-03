@@ -3,6 +3,10 @@
  * Created by Ari on 7/30/15.
  */
 
+/**
+ * Adds some basic build configuration to config
+ * @param {Object} config
+ */
 module.exports = function build(config) {
   var dir = config.dir = {
     build: 'build',

@@ -5,7 +5,21 @@
 var _ = require('underscore');
 var path = require('path');
 
+/**
+ * The config that will eventually be exported.
+ * @name config
+ * @type {{}}
+ */
 var config = {};
+
+/**
+ * The this for all config files that will be loaded. Used for internal data,
+ * not exported.
+ *
+ * @type {{_: (_|exports|module.exports), path: *, paths: (*|resolve|Function),
+ *   env: (string|string|string), test: boolean, dev: boolean, prod: boolean,
+ *   debug: boolean}}
+ */
 var context = {
   // This line looks really stupid, but it's actual code that does stuff.
   _: _,
@@ -38,4 +52,8 @@ for (var i = 0; i < configFiles.length; i++) {
   require('./' + configFiles[i]).call(context, config);
 }
 
+/**
+ * @export {Object} config
+ * @type {{}}
+ */
 module.exports = config;

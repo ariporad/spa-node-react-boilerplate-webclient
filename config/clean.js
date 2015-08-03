@@ -3,6 +3,10 @@
  * Created by Ari on 7/30/15.
  */
 
+/**
+ * Adds config.clean.ignore with a list of files to never clean
+ * @param {Object} config
+ */
 module.exports = function clean(config) {
   var ignore = this.negate(
     config.bundle + '*',

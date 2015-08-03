@@ -2,6 +2,13 @@
 /**
  * Created by Ari on 7/30/15.
  */
+
+/**
+ * Adds a script property to config with various configuration pertaining to
+ * building the scripts.
+ *
+ * @param {Object} config the config object to add scripts config onto.
+ */
 module.exports = function(config){
   var scripts = config.scripts = {
     mainFile: config.dir.scripts + '/index.jsx',
