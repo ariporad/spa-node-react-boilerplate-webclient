@@ -15,7 +15,7 @@ module.exports = function(config) {
 
   if (this.dev) {
     var options = browserify.options = {
-      basedir: this.paths(__dirname, '..', config.toBuild(config.dir.scripts)[0]),
+      basedir: this.paths(__dirname, '..', config.to.build(config.dir.scripts)[0]),
       debug: true,
     };
   }
