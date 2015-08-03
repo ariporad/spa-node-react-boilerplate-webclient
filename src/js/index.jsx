@@ -11,26 +11,13 @@ import { default as Router, Route, RouteHandler, DefaultRoute } from 'react-rout
 
 import config from './config';
 
-import Navbar from './components/Navbar.jsx';
+import Template from './components/Template.jsx';
 
 import About from './components/About.jsx';
 import Home from './components/Home.jsx';
 
-const App = React.createClass({
-  render: () => {
-    return (
-      <div className="container-fluid page">
-        <Navbar name={config.name} />
-        <div className="app">
-          <RouteHandler />
-        </div>
-      </div>
-    );
-  },
-});
-
 const routes = (
-  <Route handler={App} path="/">
+  <Route handler={Template} path="/">
     <Route handler={About} path="/about" />
     <DefaultRoute handler={Home} />
   </Route>
