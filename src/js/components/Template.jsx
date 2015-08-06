@@ -4,13 +4,14 @@
 import React from 'react';
 
 import Navbar from './Navbar.jsx';
+import config from '../config';
 
 /**
  * PropTypes for Template
  * @type {{name: *}}
  */
 const propTypes = {
-  name: React.PropTypes.string.isRequired,
+  // name: React.PropTypes.string.isRequired,
 };
 
 /**
@@ -19,9 +20,14 @@ const propTypes = {
  */
 class Template extends React.Component {
   render() {
+    console.log(this);
     return (
       <div className="container-fluid page">
-        <Navbar name={this.props.name} />
+        {/*
+          * This is really bad, but react-router doesn't support passing props
+          * till v1.0.0, currently in beta
+          */}
+        <Navbar name={config.name} />
         <div className="app">
           {this.props.children}
         </div>

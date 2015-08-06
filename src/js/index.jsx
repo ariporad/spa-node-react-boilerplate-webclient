@@ -21,7 +21,7 @@ console.log(config);
 
 const routes = (
   <Route handler={Template} path="/">
-    <Route handler={About} path="/about" />
+    <Route handler={About} path="about" />
     <DefaultRoute handler={Home} />
   </Route>
 );
