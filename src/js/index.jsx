@@ -3,7 +3,7 @@ import 'babelify/polyfill';
  * Created by Ari on 7/19/15.
  */
 import React from 'react';
-import { default as Router, Route, DefaultRoute } from 'react-router';
+import { default as Router, Route, DefaultRoute, RouteHandler } from 'react-router';
 // import { Nav, NavItem, Navbar, DropdownButton, MenuItem } from
 // 'react-bootstrap';
 // import { NavItemLink, ButtonLink, ListGroupItemLink }
@@ -11,7 +11,7 @@ import { default as Router, Route, DefaultRoute } from 'react-router';
 
 import config from './config';
 
-import Template from './components/Template.jsx';
+import Navbar from './components/Navbar.jsx';
 
 import About from './components/About.jsx';
 import Home from './components/Home.jsx';
@@ -19,8 +19,35 @@ import Home from './components/Home.jsx';
 console.log('Running with config:');
 console.log(config);
 
+const appPropTypes = {
+};
+
+/**
+ * @class
+ * @classdesc Renders a Navbar and a RouteHandler
+ */
+class App extends React.Component {
+  render() {
+    console.log(this);
+    return (
+      <div className="container-fluid page">
+        {/*
+         * Ideally this would get passed in as a prop, but react-router doesn't
+         * support that till 1.0, which is currently in beta.
+         */}
+        <Navbar name={config.name} />
+        <div className="app">
+          <RouteHandler />
+        </div>
+      </div>
+    );
+  }
+}
+
+App.propTypes = appPropTypes;
+
 const routes = (
-  <Route handler={Template} path="/">
+  <Route handler={App} path="/">
     <Route handler={About} path="about" />
     <DefaultRoute handler={Home} />
   </Route>
@@ -29,3 +56,5 @@ const routes = (
 Router.run(routes, (Root) => {
   React.render(<Root />, document.body);
 });
+
+// 9fb27344e1b50299df51df88be1f4cff6cf89d91
