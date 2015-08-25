@@ -1,4 +1,5 @@
 import 'babelify/polyfill';
+import 'dotenv/config';
 /**
  * Created by Ari on 7/19/15.
  */
@@ -10,15 +11,10 @@ import { default as Router, Route, DefaultRoute, RouteHandler } from 'react-rout
 // import { NavItemLink, ButtonLink, ListGroupItemLink }
 // from    'react-router-bootstrap';
 
-import config from './config';
-
 import Navbar from './components/Navbar.jsx';
 
 import About from './components/About.jsx';
 import Home from './components/Home.jsx';
-
-console.log('Running with config:');
-console.log(config);
 
 const appPropTypes = {
 };
@@ -36,7 +32,7 @@ class App extends React.Component {
          * Ideally this would get passed in as a prop, but react-router doesn't
          * support that till 1.0, which is currently in beta.
          */}
-        <Navbar name={config.name} />
+        <Navbar name={process.env.NAME} />
         <div className="app">
           <RouteHandler />
         </div>

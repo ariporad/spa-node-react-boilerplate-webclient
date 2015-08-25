@@ -4,8 +4,6 @@
 import React from 'react';
 import Radium from 'radium';
 
-import config from '../config';
-
 /**
  * PropTypes for Home
  * @type {{}}
@@ -21,7 +19,7 @@ const propTypes = {
 class Home extends React.Component {
   render() {
     return (
-      <p>Welcome to {config.name}!</p>
+      <p>Welcome to {process.env.NAME}!</p>
     );
   }
 }

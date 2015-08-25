@@ -13,6 +13,7 @@ module.exports = function(config) {
     transform: [
       "babelify",
       ["extensify", { "extensions": ["jsx"] }],
+      "dotenvify",
       "envify",
       "brfs"
     ],
