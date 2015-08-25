@@ -91,22 +91,6 @@ module.exports = function Gruntfile(grunt) {
     //
 
     // Compile the Styl(us)
-    stylus: {
-      prod: {
-        src: config.to.src(config.style.all),
-        dest: config.bundle + 'css',
-      },
-      dev: {
-        options: {
-          sourcemap: {
-            // grunt-contrib-stylus doesn't support external sourcemaps
-            inline: true,
-          },
-        },
-        src: config.to.src(config.style.all),
-        dest: config.bundle + 'css',
-      },
-    },
 
     // CSS Postproccessing
     postcss: {

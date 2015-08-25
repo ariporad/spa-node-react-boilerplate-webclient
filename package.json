@@ -81,6 +81,7 @@
   "dependencies": {
     "bootstrap": "^3.3.5",
     "jquery": "^2.1.4",
+    "radium": "^0.13.8",
     "react": "^0.13.3",
     "react-bootstrap": "^0.24.2",
     "react-router": "^0.13.3",

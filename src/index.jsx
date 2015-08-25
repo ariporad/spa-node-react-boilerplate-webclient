@@ -3,6 +3,7 @@ import 'babelify/polyfill';
  * Created by Ari on 7/19/15.
  */
 import React from 'react';
+import Radium from 'Radium';
 import { default as Router, Route, DefaultRoute, RouteHandler } from 'react-router';
 // import { Nav, NavItem, Navbar, DropdownButton, MenuItem } from
 // 'react-bootstrap';
@@ -26,9 +27,9 @@ const appPropTypes = {
  * @class
  * @classdesc Renders a Navbar and a RouteHandler
  */
+@Radium
 class App extends React.Component {
   render() {
-    console.log(this);
     return (
       <div className="container-fluid page">
         {/*
@@ -56,5 +57,3 @@ const routes = (
 Router.run(routes, (Root) => {
   React.render(<Root />, document.body);
 });
-
-// 9fb27344e1b50299df51df88be1f4cff6cf89d91

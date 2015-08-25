@@ -2,6 +2,7 @@
  * Created by Ari on 7/29/15.
  */
 import React from 'react';
+import Radium from 'radium';
 
 import config from '../config';
 
@@ -16,6 +17,7 @@ const propTypes = {
  * @classdesc A basic home page that displays a welcome message
  * @class
  */
+@Radium
 class Home extends React.Component {
   render() {
     return (
