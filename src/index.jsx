@@ -1,8 +1,7 @@
-import 'babelify/polyfill';
-import 'dotenv/config';
 /**
  * Created by Ari on 7/19/15.
  */
+import 'babelify/polyfill';
 import React from 'react';
 import Radium from 'Radium';
 import { default as Router, Route, DefaultRoute, RouteHandler } from 'react-router';
