@@ -2,8 +2,8 @@
  * Created by Ari on 7/26/15.
  */
 import React from 'react';
-import { Nav, /*NavItem,*/ Navbar as BootstrapNavbar/*, DropdownButton, MenuItem*/ } from 'react-bootstrap';
-import { NavItemLink/*, ButtonLink, ListGroupItemLink*/ } from 'react-router-bootstrap';
+import { Nav, Navbar as BootstrapNavbar } from 'react-bootstrap';
+import { NavItemLink } from 'react-router-bootstrap';
 
 /**
  * propTypes for Navbar

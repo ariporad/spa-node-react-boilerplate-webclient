@@ -1,0 +1,7 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "no-console": 0,                 // http://eslint.org/docs/rules/no-console
+    "valid-jsdoc": 2                 // http://eslint.org/docs/rules/valid-jsdoc
+  }
+}

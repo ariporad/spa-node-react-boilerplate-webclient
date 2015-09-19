@@ -1,18 +1,17 @@
 /**
  * Created by Ari on 7/26/15.
  */
-
-import { sandbox } from 'sinon';
+var sandbox = require('sinon').sandbox;
 
 // Before every test, make global.sinon a sandbox, then clean up afterwards.
 
 if (typeof beforeEach == 'function' && typeof afterEach == 'function') {
-  beforeEach(() => {
+  beforeEach(function createSandbox() {
     global.sinon = sandbox.create();
   });
 
-  afterEach(() => {
+  afterEach(function restore() {
     global.sinon.restore();
-    global.sinon = undefined;
+    delete global.sinon;
   });
 }
